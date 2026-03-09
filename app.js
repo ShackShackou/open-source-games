@@ -181,8 +181,10 @@ function corsicaMask(nx, ny) {
   const northLobe = 1.0 - ((x + 0.02) ** 2 / 0.5 + (y - 0.45) ** 2 / 0.9);
   const southLobe = 1.0 - ((x - 0.05) ** 2 / 0.48 + (y + 0.34) ** 2 / 0.8);
   const neck = 1.0 - ((x + 0.08) ** 2 / 0.22 + (y - 0.02) ** 2 / 0.35);
+  // Keep Bastia on land by extending the north-east coastline (Cap Corse).
+  const capCorse = (1.0 - ((x - 0.66) ** 2 / 0.05 + (y - 0.82) ** 2 / 0.14)) * 0.42;
 
-  return Math.max(northLobe, southLobe, neck);
+  return Math.max(northLobe, southLobe, neck, capCorse);
 }
 
 function addCities(island) {
