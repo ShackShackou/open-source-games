@@ -19,6 +19,7 @@ body {
   width: 100vw;
   height: 100vh;
   display: block;
+  z-index: 0;
 }
 
 .hud {
@@ -33,6 +34,8 @@ body {
   border: 1px solid rgba(170, 200, 255, 0.18);
   backdrop-filter: blur(7px);
   box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+  touch-action: manipulation;
 }
 
 h1 {
@@ -60,6 +63,11 @@ button {
 
 button:hover {
   filter: brightness(1.08);
+}
+
+#landButton {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hint {

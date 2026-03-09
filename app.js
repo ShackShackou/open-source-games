@@ -52,12 +52,13 @@ const corsicaGroup = createCorsica();
 corsicaGroup.visible = false;
 scene.add(corsicaGroup);
 
+const hud = document.querySelector('.hud');
 const landButton = document.querySelector('#landButton');
 let isLanding = false;
 let landingProgress = 0;
 let mode = 'earth';
 
-landButton.addEventListener('click', () => {
+function startLanding() {
   if (isLanding || mode === 'corsica') {
     return;
   }
@@ -65,7 +66,28 @@ landButton.addEventListener('click', () => {
   landingProgress = 0;
   landButton.disabled = true;
   landButton.textContent = 'Transition en cours...';
-});
+}
+
+landButton.addEventListener('click', startLanding);
+landButton.addEventListener(
+  'touchend',
+  (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    startLanding();
+  },
+  { passive: false }
+);
+
+if (hud) {
+  // Prevent touch gestures on the HUD from being interpreted as scene controls.
+  const stopHudEvent = (event) => event.stopPropagation();
+  hud.addEventListener('pointerdown', stopHudEvent);
+  hud.addEventListener('pointerup', stopHudEvent);
+  hud.addEventListener('touchstart', stopHudEvent, { passive: true });
+  hud.addEventListener('touchmove', stopHudEvent, { passive: true });
+  hud.addEventListener('touchend', stopHudEvent, { passive: true });
+}
 
 function createEarth() {
   const group = new THREE.Group();
